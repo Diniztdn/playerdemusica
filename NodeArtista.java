@@ -1,9 +1,8 @@
 class NodeArtista {
     String nomeArtista;
-    NodeMusica primeiraMusica;
-    
-    NodeCantor proxCantor;
-    NodeCantor antCantor;
+    NodeMusica primeiraMusica;   
+    NodeArtista proxArtista;
+    NodeArtista antArtista;
 
     public NodeArtista(String nomeArtista) {
         this.nomeArtista = nomeArtista;
