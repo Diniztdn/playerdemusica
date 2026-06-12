@@ -1,6 +1,6 @@
 class NodeArtista {
     String nomeArtista;
-    NodeMusica primeiraMusica;
+    NoMusica primeiraMusica;
     
     NodeCantor proxCantor;
     NodeCantor antCantor;
