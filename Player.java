@@ -11,9 +11,9 @@ public class Player {
 
     public void proximaPlaylist() {
         if (ArtistaAtual != null) {
-            ArtistaAtual = ArtistaAtual.proxArtista;
-            musicaAtual = ArtistaAtual.primeiraMusica;
-            System.out.println("Playlist de: " + ArtistaAtual.nomeArtista);
+            ArtistaAtual = ArtistaAtual.getProxArtista();
+            musicaAtual = ArtistaAtual.getPrimeiraMusica();
+            System.out.println("Playlist de: " + ArtistaAtual.getNomeArtista());
         } else {
             System.out.println("O player está vazio.");
         }
@@ -21,9 +21,9 @@ public class Player {
 
     public void playlistAnterior() {
         if (ArtistaAtual != null) {
-            ArtistaAtual = ArtistaAtual.antArtista;
-            musicaAtual = ArtistaAtual.primeiraMusica;
-            System.out.println("Voltou para a Playlist de: " + ArtistaAtual.nomeArtista);       
+            ArtistaAtual = ArtistaAtual.getAntArtista();
+            musicaAtual = ArtistaAtual.getPrimeiraMusica();
+            System.out.println("Voltou para a Playlist de: " + ArtistaAtual.getNomeArtista());       
         } else {
             System.out.println("O player está vazio.");
         }
@@ -34,21 +34,21 @@ public class Player {
 
         if (headArtista == null) {
             headArtista = novoArtista;
-            novoArtista.proxArtista = novoArtista;
-            novoArtista.antArtista = novoArtista; 
+            novoArtista.setProxArtista(novoArtista);
+            novoArtista.setAntArtista(novoArtista); 
             
             ArtistaAtual = novoArtista;
-            musicaAtual = novoArtista.primeiraMusica;
+            musicaAtual = novoArtista.getPrimeiraMusica();
             System.out.println("Playlist de " + nomeArtista + " criada como a primeira!");
             return;
         }
-        NoArtista ultimo = headArtista.antArtista;
+        NoArtista ultimo = headArtista.getAntArtista();
 
-        ultimo.proxArtista = novoArtista;
-        novoArtista.antArtista = ultimo;
+        ultimo.setProxArtista(novoArtista);
+        novoArtista.setAntArtista(ultimo);
         
-        novoArtista.proxArtista = headArtista;
-        headArtista.antArtista = novoArtista; 
+        novoArtista.setProxArtista(headArtista);
+        headArtista.setAntArtista(novoArtista); 
 
         System.out.println("Playlist de " + nomeArtista + " adicionada!");
     }
@@ -62,11 +62,11 @@ public class Player {
         NoArtista atual = headArtista;
         
         do {
-            if (atual.nomeArtista.equalsIgnoreCase(nomeArtista)) {
+            if (atual.getNomeArtista().equalsIgnoreCase(nomeArtista)) {
                 artistaParaRemover = atual;
                 break;
             }
-            atual = atual.proxArtista;
+            atual = atual.getProxArtista();
         } while (atual != headArtista);
 
         if (artistaParaRemover == null) {
@@ -75,30 +75,28 @@ public class Player {
         }
 
         if (ArtistaAtual == artistaParaRemover) {
-            if (ArtistaAtual.proxArtista != ArtistaAtual) {
-                ArtistaAtual = ArtistaAtual.proxArtista;
-                musicaAtual = ArtistaAtual.primeiraMusica;
+            if (ArtistaAtual.getProxArtista() != ArtistaAtual) {
+                ArtistaAtual = ArtistaAtual.getProxArtista();
+                musicaAtual = ArtistaAtual.getPrimeiraMusica();
             }
             else {
                 ArtistaAtual = null;
                 musicaAtual = null;
             }
         }
-        if (artistaParaRemover.proxArtista == artistaParaRemover) {
+        
+        if (artistaParaRemover.getProxArtista() == artistaParaRemover) {
             headArtista = null;
-        }
+        } 
         else {
-
-            artistaParaRemover.antArtista.proxArtista = artistaParaRemover.proxArtista;
-            artistaParaRemover.proxArtista.antArtista = artistaParaRemover.antArtista;
+            artistaParaRemover.getAntArtista().setProxArtista(artistaParaRemover.getProxArtista());
+            artistaParaRemover.getProxArtista().setAntArtista(artistaParaRemover.getAntArtista());
 
             if (artistaParaRemover == headArtista) {
-                headArtista = artistaParaRemover.proxArtista;
+                headArtista = artistaParaRemover.getProxArtista();
             }
         }
 
         System.out.println("Playlist de " + nomeArtista + " removida com sucesso!");
     }
-
-
 }
