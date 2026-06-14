@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<fx:root prefHeight="615.0" prefWidth="1000.0" style="-fx-background-color: #0F172A;" type="AnchorPane" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+
+   <children>
+
+      <VBox layoutX="-1.0" prefWidth="220.0" spacing="15.0" style="-fx-background-color: #1E293B;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="0.0">
+
+         <children>
+
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+
+               <children>
+
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+
+                     <image>
+
+                        <Image url="http://googleusercontent.com/image_collection/image_retrieval/221504711903740931" />
+
+                     </image>
+
+                  </ImageView>
+
+                  <Label text="TitsSound" textFill="#00d2ff">
+
+                     <font>
+
+                        <Font name="System Bold" size="24.0" />
+
+                     </font>
+
+                  </Label>
+
+               </children>
+
+               <VBox.margin>
+
+                  <Insets bottom="30.0" />
+
+               </VBox.margin>
+
+            </HBox>
+
+           
+
+            <Button fx:id="addplaylist" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-text-fill: #1A1A1A; -fx-background-radius: 10;" text="Criar Playlist">
+
+               <font>
+
+                  <Font name="System Bold" size="14.0" />
+
+               </font>
+
+            </Button>
+            <Button fx:id="addmusic" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-text-fill: #1A1A1A; -fx-background-radius: 10;" text="Adicionar Música">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+
+         </children>
+
+         <padding>
+
+            <Insets bottom="20.0" left="20.0" right="20.0" top="30.0" />
+
+         </padding>
+
+      </VBox>
+
+
+
+      <VBox layoutX="220.0" spacing="20.0" style="-fx-text-fill: linear-gradient(to right, #00d2ff, #92fe9d);" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+         <children>
+
+            <HBox alignment="CENTER_LEFT" spacing="15.0" />
+
+           
+
+            <AnchorPane prefHeight="250.0" prefWidth="740.0" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-background-radius: 25;">
+
+               <children>
+
+                  <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="514.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="26.0">
+
+                     <image>
+
+                        <Image url="http://googleusercontent.com/image_collection/image_retrieval/12505426402243798857" />
+
+                     </image>
+
+                  </ImageView>
+
+                  <VBox layoutX="36.0" layoutY="59.0" spacing="10.0">
+
+                     <children>
+
+                        <Label text="Tocando agora:" textFill="#0F172A">
+
+                           <font>
+
+                              <Font name="System Bold" size="14.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Label text="Midnight City" textFill="#0F172A">
+
+                           <font>
+
+                              <Font name="System Bold" size="48.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Label text="Nome do Artista" textFill="#0f172a">
+
+                           <font>
+
+                              <Font name="System Bold" size="12.0" />
+
+                           </font>
+
+                        </Label>
+
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #0F172A; -fx-text-fill: white; -fx-background-radius: 20;" text="Playlist" textFill="#00d2ff" />
+
+                     </children>
+
+                  </VBox>
+
+               </children>
+
+            </AnchorPane>
+      
+                              <VBox alignment="CENTER" spacing="5.0">
+      
+                                 <children>
+      
+                                                            <HBox alignment="CENTER" spacing="25.0">
+      
+                                                               <children>
+            
+                                                                                    <Button fx:id="antplay" cancelButton="true" mnemonicParsing="false" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-background-radius: 15px;" text="⇤">
+            
+                                                                                       <font>
+            
+                                                                                          <Font size="18.0" />
+            
+                                                                                       </font>
+            
+                                                                                    </Button>
+      
+                                                                                    <Button fx:id="antmusic" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: linear-gradient(to right, #00d2ff, #92fe9d);" text="⏮">
+      
+                                                                                       <font>
+      
+                                                                                          <Font size="24.0" />
+      
+                                                                                       </font>
+      
+                                                                                    </Button>
+      
+                                                                                    <Button fx:id="parar" mnemonicParsing="false" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-background-radius: 20px;" text="⏸">
+      
+                                                                                       <font>
+      
+                                                                                          <Font size="18.0" />
+      
+                                                                                       </font>
+      
+                                                                                    </Button>
+      
+                                                                  <Button fx:id="proxmusic" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: linear-gradient(to right, #00d2ff, #92fe9d);" text="⏭">
+      
+                                                                     <font>
+      
+                                                                        <Font name="System Bold" size="24.0" />
+      
+                                                                     </font>
+      
+                                                                     <textFill>
+      
+                                                                        <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+      
+                                                                           <stops>
+      
+                                                                              <Stop>
+      
+                                                                                 <color>
+      
+                                                                                    <Color />
+      
+                                                                                 </color>
+      
+                                                                              </Stop>
+      
+                                                                              <Stop offset="1.0">
+      
+                                                                                 <color>
+      
+                                                                                    <Color red="0.2984015643596649" green="0.3489733636379242" blue="0.9052631855010986" />
+      
+                                                                                 </color>
+      
+                                                                              </Stop>
+      
+                                                                           </stops>
+      
+                                                                        </LinearGradient>
+      
+                                                                     </textFill>
+      
+                                                                  </Button>
+      
+                                                                  <Button fx:id="proxplay" mnemonicParsing="false" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-background-radius: 15px;" text="⇥">
+      
+                                                                     <font>
+      
+                                                                        <Font size="18.0" />
+      
+                                                                     </font>
+      
+                                                                  </Button>
+      
+                                                               </children>
+      
+                                                            </HBox>
+      
+                                                                        <ProgressBar fx:id="progressao" prefWidth="500.0" progress="0.45" style="-fx-control-inner-background: white; -fx-accent: #00d2ff; -fx-box-border: transparent; -fx-border-color: transparent; fx-border-width: 0px;" />
+      
+                                 </children>
+      
+                              </VBox>
+
+           
+
+            <HBox spacing="20.0">
+
+               <children>
+
+                  <VBox alignment="CENTER" spacing="10.0" />
+
+                  <VBox alignment="CENTER" spacing="10.0" />
+
+               </children>
+
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
+
+               <children>
+
+                  <VBox alignment="CENTER_LEFT" />
+
+                  <HBox alignment="CENTER" spacing="30.0" />
+
+               </children>
+
+            </HBox>
+
+         </children>
+
+         <padding>
+
+            <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+
+         </padding>
+
+      </VBox>
+      <Button fx:id="deletmusic" layoutX="610.0" layoutY="532.0" mnemonicParsing="false" text="Remover Música" />
+      <Button fx:id="deleteplay" layoutX="727.0" layoutY="532.0" mnemonicParsing="false" text="Remover Playlist" />
+
+   </children>
+
+</fx:root>

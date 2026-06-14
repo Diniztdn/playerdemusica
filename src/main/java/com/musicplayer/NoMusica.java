@@ -1,5 +1,6 @@
 public class NoMusica {
     private String nome;
+    private String nomeArtista;
     private int minutagem;
     private NoMusica anterior;
     private NoMusica proxima;

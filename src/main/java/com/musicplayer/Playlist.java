@@ -1,10 +1,10 @@
 public class Playlist {
-    private String nomeArtista;
+    private String nomePlaylist;
     private NoMusica ultimaMusica;
     private Playlist proximaPlaylist, playlistAnterior;
 
-    public Playlist(String nomeArtista) {
-        this.nomeArtista = nomeArtista;
+    public Playlist(String nomePlaylist) {
+        this.nomePlaylist = nomePlaylist;
         this.ultimaMusica = null;
         this.proximaPlaylist = this.playlistAnterior = null;
     }
@@ -72,8 +72,8 @@ public class Playlist {
         return ultimaMusica;
     }
 
-    public String getNomeArtista() {
-        return nomeArtista;
+    public String getNomePlaylist() {
+        return nomePlaylist;
     }
 
     public Playlist getPlaylistAnterior() {
@@ -82,10 +82,6 @@ public class Playlist {
     
     public Playlist getProximaPlaylist() {
         return proximaPlaylist;
-    }
-
-    public void setNomeArtista(String nomeArtista) {
-        this.nomeArtista = nomeArtista;
     }
 
     public void setUltimaMusica(NoMusica ultimaMusica) {
