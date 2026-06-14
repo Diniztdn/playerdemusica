@@ -1,10 +1,12 @@
 public class Playlist {
     private String nomeArtista;
     private NoMusica ultimaMusica;
+    private Playlist proximaPlaylist, playlistAnterior;
 
     public Playlist(String nomeArtista) {
         this.nomeArtista = nomeArtista;
         this.ultimaMusica = null;
+        this.proximaPlaylist = this.playlistAnterior = null;
     }
 
     public boolean estaVazia() {
@@ -66,4 +68,36 @@ public class Playlist {
         System.out.println();
     }
     
+    public NoMusica getUltimaMusica() {
+        return ultimaMusica;
+    }
+
+    public String getNomeArtista() {
+        return nomeArtista;
+    }
+
+    public Playlist getPlaylistAnterior() {
+        return playlistAnterior;
+    }
+    
+    public Playlist getProximaPlaylist() {
+        return proximaPlaylist;
+    }
+
+    public void setNomeArtista(String nomeArtista) {
+        this.nomeArtista = nomeArtista;
+    }
+
+    public void setUltimaMusica(NoMusica ultimaMusica) {
+        this.ultimaMusica = ultimaMusica;
+    }
+
+    public void setProximaPlaylist(Playlist proximaPlaylist) {
+        this.proximaPlaylist = proximaPlaylist;
+    }
+
+    public void setPlaylistAnterior(Playlist playlistAnterior) {
+        this.playlistAnterior = playlistAnterior;
+    }
+
 }
