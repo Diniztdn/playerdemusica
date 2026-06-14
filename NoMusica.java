@@ -42,4 +42,9 @@ public class NoMusica {
     public void setProxima(NoMusica proxima) {
         this.proxima = proxima;
     }
+
+    @Override
+    public String toString() {
+        return nome + " - " + minutagem + " s";
+    }
 }
