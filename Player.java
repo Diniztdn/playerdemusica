@@ -1,6 +1,6 @@
 public class Player {
-    private NoArtista headArtista;
-    private NoArtista ArtistaAtual;
+    private Playlist headArtista;
+    private Playlist ArtistaAtual;
     private NoMusica musicaAtual;
 
     public Player() {
@@ -11,8 +11,8 @@ public class Player {
 
     public void proximaPlaylist() {
         if (ArtistaAtual != null) {
-            ArtistaAtual = ArtistaAtual.getProxArtista();
-            musicaAtual = ArtistaAtual.getPrimeiraMusica();
+            ArtistaAtual = ArtistaAtual.getProximaPlaylist();
+            musicaAtual = ArtistaAtual.getUltimaMusica().getProxima();
             System.out.println("Playlist de: " + ArtistaAtual.getNomeArtista());
         } else {
             System.out.println("O player está vazio.");
@@ -21,8 +21,8 @@ public class Player {
 
     public void playlistAnterior() {
         if (ArtistaAtual != null) {
-            ArtistaAtual = ArtistaAtual.getAntArtista();
-            musicaAtual = ArtistaAtual.getPrimeiraMusica();
+            ArtistaAtual = ArtistaAtual.getPlaylistAnterior();
+            musicaAtual = ArtistaAtual.getUltimaMusica().getProxima();
             System.out.println("Voltou para a Playlist de: " + ArtistaAtual.getNomeArtista());       
         } else {
             System.out.println("O player está vazio.");
@@ -30,25 +30,25 @@ public class Player {
     }
 
     public void adicionarPlaylist(String nomeArtista) {
-        NoArtista novoArtista = new NoArtista(nomeArtista);
+        Playlist novoArtista = new Playlist(nomeArtista);
 
         if (headArtista == null) {
             headArtista = novoArtista;
-            novoArtista.setProxArtista(novoArtista);
-            novoArtista.setAntArtista(novoArtista); 
+            novoArtista.setProximaPlaylist(novoArtista);
+            novoArtista.setPlaylistAnterior(novoArtista); 
             
             ArtistaAtual = novoArtista;
-            musicaAtual = novoArtista.getPrimeiraMusica();
+            musicaAtual = novoArtista.getUltimaMusica().getProxima();
             System.out.println("Playlist de " + nomeArtista + " criada como a primeira!");
             return;
         }
-        NoArtista ultimo = headArtista.getAntArtista();
+        Playlist ultimo = headArtista.getPlaylistAnterior();
 
-        ultimo.setProxArtista(novoArtista);
-        novoArtista.setAntArtista(ultimo);
+        ultimo.setProximaPlaylist(novoArtista);
+        novoArtista.setPlaylistAnterior(ultimo);
         
-        novoArtista.setProxArtista(headArtista);
-        headArtista.setAntArtista(novoArtista); 
+        novoArtista.setProximaPlaylist(headArtista);
+        headArtista.setPlaylistAnterior(novoArtista); 
 
         System.out.println("Playlist de " + nomeArtista + " adicionada!");
     }
@@ -58,15 +58,15 @@ public class Player {
             System.out.println("O player está vazio.");
             return;
         }
-        NoArtista artistaParaRemover = null;
-        NoArtista atual = headArtista;
+        Playlist artistaParaRemover = null;
+        Playlist atual = headArtista;
         
         do {
             if (atual.getNomeArtista().equalsIgnoreCase(nomeArtista)) {
                 artistaParaRemover = atual;
                 break;
             }
-            atual = atual.getProxArtista();
+            atual = atual.getProximaPlaylist();
         } while (atual != headArtista);
 
         if (artistaParaRemover == null) {
@@ -75,9 +75,9 @@ public class Player {
         }
 
         if (ArtistaAtual == artistaParaRemover) {
-            if (ArtistaAtual.getProxArtista() != ArtistaAtual) {
-                ArtistaAtual = ArtistaAtual.getProxArtista();
-                musicaAtual = ArtistaAtual.getPrimeiraMusica();
+            if (ArtistaAtual.getProximaPlaylist() != ArtistaAtual) {
+                ArtistaAtual = ArtistaAtual.getProximaPlaylist();
+                musicaAtual = ArtistaAtual.getUltimaMusica().getProxima();
             }
             else {
                 ArtistaAtual = null;
@@ -85,15 +85,15 @@ public class Player {
             }
         }
         
-        if (artistaParaRemover.getProxArtista() == artistaParaRemover) {
+        if (artistaParaRemover.getProximaPlaylist() == artistaParaRemover) {
             headArtista = null;
         } 
         else {
-            artistaParaRemover.getAntArtista().setProxArtista(artistaParaRemover.getProxArtista());
-            artistaParaRemover.getProxArtista().setAntArtista(artistaParaRemover.getAntArtista());
+            artistaParaRemover.getPlaylistAnterior().setProximaPlaylist(artistaParaRemover.getProximaPlaylist());
+            artistaParaRemover.getProximaPlaylist().setPlaylistAnterior(artistaParaRemover.getPlaylistAnterior());
 
             if (artistaParaRemover == headArtista) {
-                headArtista = artistaParaRemover.getProxArtista();
+                headArtista = artistaParaRemover.getProximaPlaylist();
             }
         }
 
