@@ -12,7 +12,13 @@ public class Player {
     public void proximaPlaylist() {
         if (ArtistaAtual != null) {
             ArtistaAtual = ArtistaAtual.getProximaPlaylist();
-            musicaAtual = ArtistaAtual.getUltimaMusica().getProxima();
+
+            if (!ArtistaAtual.estaVazia()) {
+                musicaAtual = ArtistaAtual.getUltimaMusica().getProxima();
+            }
+            else {
+                musicaAtual = null;
+            }
             System.out.println("Playlist de: " + ArtistaAtual.getNomeArtista());
         } else {
             System.out.println("O player está vazio.");
@@ -22,7 +28,13 @@ public class Player {
     public void playlistAnterior() {
         if (ArtistaAtual != null) {
             ArtistaAtual = ArtistaAtual.getPlaylistAnterior();
-            musicaAtual = ArtistaAtual.getUltimaMusica().getProxima();
+
+            if (!ArtistaAtual.estaVazia()) {
+                musicaAtual = ArtistaAtual.getUltimaMusica().getProxima();
+            }
+            else {
+                musicaAtual = null;
+            }
             System.out.println("Voltou para a Playlist de: " + ArtistaAtual.getNomeArtista());       
         } else {
             System.out.println("O player está vazio.");
@@ -38,7 +50,12 @@ public class Player {
             novoArtista.setPlaylistAnterior(novoArtista); 
             
             ArtistaAtual = novoArtista;
-            musicaAtual = novoArtista.getUltimaMusica().getProxima();
+            if (!novoArtista.estaVazia()) {
+                musicaAtual = novoArtista.getUltimaMusica().getProxima();
+            } 
+            else {
+                musicaAtual = null; 
+            }
             System.out.println("Playlist de " + nomeArtista + " criada como a primeira!");
             return;
         }
@@ -77,7 +94,12 @@ public class Player {
         if (ArtistaAtual == artistaParaRemover) {
             if (ArtistaAtual.getProximaPlaylist() != ArtistaAtual) {
                 ArtistaAtual = ArtistaAtual.getProximaPlaylist();
-                musicaAtual = ArtistaAtual.getUltimaMusica().getProxima();
+                if (!ArtistaAtual.estaVazia()) {
+                    musicaAtual = ArtistaAtual.getUltimaMusica().getProxima();
+                }
+                else {
+                    musicaAtual = null;
+                }
             }
             else {
                 ArtistaAtual = null;
