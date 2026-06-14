@@ -30,28 +30,32 @@ public class Playlist {
             System.out.println("Playlist vazia");
             return;
         }
+        
         NoMusica encontrado = null;
         NoMusica percorre = ultimaMusica.getProxima();
+        
         do {
-            if (percorre.getNome() == nomeMusica) {
+            if (percorre.getNome().equalsIgnoreCase(nomeMusica)) {
                 encontrado = percorre;
                 break;
             }
+            percorre = percorre.getProxima();
         } while (percorre != ultimaMusica.getProxima());
-        if (ultimaMusica == ultimaMusica.getProxima() && encontrado != null) {
-            ultimaMusica = null;
-            return;
-        }
-        if (encontrado == ultimaMusica) {
-            ultimaMusica = ultimaMusica.getAnterior();
-            ultimaMusica.setAnterior(ultimaMusica.getAnterior().getAnterior());
-            ultimaMusica.setProxima(ultimaMusica.getProxima().getProxima());
-            return;    
-        }
+
         if (encontrado != null) {
-            encontrado.getAnterior().setProxima(encontrado.getProxima());
-            encontrado.getProxima().setAnterior(encontrado.getAnterior());
-            return;
+            if (encontrado == encontrado.getProxima()) {
+                ultimaMusica = null;
+            } else {
+                encontrado.getAnterior().setProxima(encontrado.getProxima());
+                encontrado.getProxima().setAnterior(encontrado.getAnterior());
+                
+                if (encontrado == ultimaMusica) {
+                    ultimaMusica = encontrado.getAnterior();
+                }
+            }
+            System.out.println("Música " + nomeMusica + " removida.");
+        } else {
+            System.out.println("Música não encontrada.");
         }
     }
 
@@ -99,5 +103,4 @@ public class Playlist {
     public void setPlaylistAnterior(Playlist playlistAnterior) {
         this.playlistAnterior = playlistAnterior;
     }
-
 }
