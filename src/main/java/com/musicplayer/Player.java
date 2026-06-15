@@ -71,50 +71,37 @@ public class Player {
         System.out.println("Playlist de " + nomePlaylist + " adicionada!");
     }
 
-    public void removerPlaylist(String nomePlaylist) {
-        if (headPlaylist == null) {
+    public void removerPlaylist() {
+        if (ArtistaAtual == null) {
             System.out.println("O player está vazio.");
             return;
         }
-        Playlist playlistParaRemover = null;
-        Playlist atual = headPlaylist;
-        
-        do {
-            if (atual.getNomePlaylist().equalsIgnoreCase(nomePlaylist)) {
-                playlistParaRemover = atual;
-                break;
-            }
-            atual = atual.getProximaPlaylist();
-        } while (atual != headPlaylist);
 
-        if (playlistParaRemover == null) {
-            System.out.println("Playlist de '" + nomePlaylist + "' não encontrada.");
-            return;
-        }
+        System.out.println("Removendo a playlist: " + ArtistaAtual.getNomeArtista());
 
-        if (playlistAtual == playlistParaRemover) {
-            if (playlistAtual.getProximaPlaylist() != playlistAtual) {
-                playlistAtual = playlistAtual.getProximaPlaylist();
-                musicaAtual = playlistAtual.getUltimaMusica().getProxima();
+        if (ArtistaAtual.getProximaPlaylist() == ArtistaAtual) {
+            headArtista = null;
+            ArtistaAtual = null;
+            musicaAtual = null;
+        } 
+        else {
+            Playlist anterior = ArtistaAtual.getPlaylistAnterior();
+            Playlist proxima = ArtistaAtual.getProximaPlaylist();
+
+            anterior.setProximaPlaylist(proxima);
+            proxima.setPlaylistAnterior(anterior);
+
+            if (ArtistaAtual == headArtista) {
+                headArtista = proxima;
             }
+            ArtistaAtual = proxima;
+            
+            if (!ArtistaAtual.estaVazia()) {
+                musicaAtual = ArtistaAtual.getUltimaMusica().getProxima();
+            } 
             else {
-                playlistAtual = null;
                 musicaAtual = null;
             }
         }
-        
-        if (playlistParaRemover.getProximaPlaylist() == playlistParaRemover) {
-            headPlaylist = null;
-        } 
-        else {
-            playlistParaRemover.getPlaylistAnterior().setProximaPlaylist(playlistParaRemover.getProximaPlaylist());
-            playlistParaRemover.getProximaPlaylist().setPlaylistAnterior(playlistParaRemover.getPlaylistAnterior());
-
-            if (playlistParaRemover == headPlaylist) {
-                headPlaylist = playlistParaRemover.getProximaPlaylist();
-            }
-        }
-
-        System.out.println("Playlist de " + nomePlaylist + " removida com sucesso!");
     }
 }
