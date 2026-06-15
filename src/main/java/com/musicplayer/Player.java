@@ -29,6 +29,24 @@ public class Player {
         }
     }
 
+    public void proximaMusica() {
+        if (musicaAtual != null) {
+            musicaAtual = musicaAtual.getProxima();
+            System.out.println("Tocando agora: " + musicaAtual.getNome());
+        } else {
+            System.out.println("Nenhuma música na playlist para avançar.");
+        }
+    }
+
+    public void musicaAnterior() {
+        if (musicaAtual != null) {
+            musicaAtual = musicaAtual.getAnterior();
+            System.out.println("Tocando agora: " + musicaAtual.getNome());
+        } else {
+            System.out.println("Nenhuma música na playlist para voltar.");
+        }
+    }
+
     public void adicionarPlaylist(String nomePlaylist) {
         Playlist novaPlaylist = new Playlist(nomePlaylist);
 
