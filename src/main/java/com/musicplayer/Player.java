@@ -104,4 +104,22 @@ public class Player {
             }
         }
     }
+    
+    public void removerMusicaAtual() {
+    if (ArtistaAtual == null || musicaAtual == null) {
+        System.out.println("Nenhuma música tocando no momento.");
+        return;
+    }
+
+    System.out.println("Removendo a música: " + musicaAtual.getNome());
+    NoMusica proximaMusica = musicaAtual.getProxima();
+
+    if (musicaAtual == proximaMusica) {
+        ArtistaAtual.removerNoMusica(musicaAtual);
+        musicaAtual = null;
+    } else {
+        ArtistaAtual.removerNoMusica(musicaAtual);
+        musicaAtual = proximaMusica;
+    }
+}
 }
