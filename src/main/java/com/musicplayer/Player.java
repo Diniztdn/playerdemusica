@@ -13,7 +13,7 @@ public class Player {
         if (playlistAtual != null) {
             playlistAtual = playlistAtual.getProximaPlaylist();
             musicaAtual = playlistAtual.getUltimaMusica().getProxima();
-            System.out.println("Playlist atual: " + playlistAtual.getNomePlaylist());
+            System.out.println("Playlist atual: " + playlistAtual.getNomeArtista());
         } else {
             System.out.println("O player está vazio.");
         }
@@ -23,7 +23,7 @@ public class Player {
         if (playlistAtual != null) {
             playlistAtual = playlistAtual.getPlaylistAnterior();
             musicaAtual = playlistAtual.getUltimaMusica().getProxima();
-            System.out.println("Voltou para a Playlist: " + playlistAtual.getNomePlaylist());       
+            System.out.println("Voltou para a Playlist: " + playlistAtual.getNomeArtista());       
         } else {
             System.out.println("O player está vazio.");
         }
