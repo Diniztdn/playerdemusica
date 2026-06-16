@@ -25,40 +25,22 @@ public class Playlist {
         ultimaMusica.getProxima().setAnterior(ultimaMusica);
     }
 
-    public void removerMusica(String nomeMusica) {
-        if (estaVazia()) {
-            System.out.println("Playlist vazia");
-            return;
-        }
-        
-        NoMusica encontrado = null;
-        NoMusica percorre = ultimaMusica.getProxima();
-        
-        do {
-            if (percorre.getNome().equalsIgnoreCase(nomeMusica)) {
-                encontrado = percorre;
-                break;
-            }
-            percorre = percorre.getProxima();
-        } while (percorre != ultimaMusica.getProxima());
+    public void removerNoMusica(NoMusica alvo) {
+        if (estaVazia() || alvo == null) return;
 
-        if (encontrado != null) {
-            if (encontrado == encontrado.getProxima()) {
-                ultimaMusica = null;
-            } else {
-                encontrado.getAnterior().setProxima(encontrado.getProxima());
-                encontrado.getProxima().setAnterior(encontrado.getAnterior());
-                
-                if (encontrado == ultimaMusica) {
-                    ultimaMusica = encontrado.getAnterior();
-                }
+        if (alvo == alvo.getProxima()) {
+            ultimaMusica = null;
+        } 
+        else {
+            alvo.getAnterior().setProxima(alvo.getProxima());
+            alvo.getProxima().setAnterior(alvo.getAnterior());
+            
+            if (alvo == ultimaMusica) {
+                ultimaMusica = alvo.getAnterior();
             }
-            System.out.println("Música " + nomeMusica + " removida.");
-        } else {
-            System.out.println("Música não encontrada.");
         }
     }
-
+    
     public void exibirPlaylist() {
         if (estaVazia()) {
             System.out.println("Playlist vazia");
