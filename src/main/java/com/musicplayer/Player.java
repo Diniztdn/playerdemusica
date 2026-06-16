@@ -16,6 +16,11 @@ public class Player {
     public void proximaPlaylist() {
         if (playlistAtual != null) {
             playlistAtual = playlistAtual.getProximaPlaylist();
+            if (!playlistAtual.estaVazia()) {
+                musicaAtual = playlistAtual.getUltimaMusica().getProxima();
+            } else {
+                musicaAtual = null;
+            }
             musicaAtual = playlistAtual.getUltimaMusica().getProxima();
             System.out.println("Playlist atual: " + playlistAtual.getNomeArtista());
         } else {
@@ -26,7 +31,11 @@ public class Player {
     public void playlistAnterior() {
         if (playlistAtual != null) {
             playlistAtual = playlistAtual.getPlaylistAnterior();
-            musicaAtual = playlistAtual.getUltimaMusica().getProxima();
+            if (!playlistAtual.estaVazia()) {
+                musicaAtual = playlistAtual.getUltimaMusica().getProxima();
+            } else {
+                musicaAtual = null;
+            }
             System.out.println("Voltou para a Playlist: " + playlistAtual.getNomeArtista());       
         } else {
             System.out.println("O player está vazio.");
@@ -60,7 +69,11 @@ public class Player {
             novaPlaylist.setPlaylistAnterior(novaPlaylist); 
             
             playlistAtual = novaPlaylist;
-            musicaAtual = novaPlaylist.getUltimaMusica().getProxima();
+            if (!playlistAtual.estaVazia()) {
+                musicaAtual = playlistAtual.getUltimaMusica().getProxima();
+            } else {
+                musicaAtual = null;
+            }
             System.out.println("Playlist de " + nomePlaylist + " criada como a primeira!");
             return;
         }
@@ -107,6 +120,18 @@ public class Player {
                 musicaAtual = null;
             }
         }
+    }
+
+    public void adicionarMusica(String nomeMusica, String nomeArtista, double minutagem) {
+        if (playlistAtual == null) {
+            System.out.println("Crie ou selecione uma playlist antes de adicionar músicas.");
+            return; 
+        }
+        playlistAtual.inserirMusica(nomeMusica, nomeArtista, minutagem);
+        if (musicaAtual == null) {
+            musicaAtual = playlistAtual.getUltimaMusica().getProxima();
+        }
+        System.out.println("Música '" + nomeMusica + "' adicionada na playlist '" + playlistAtual.getNomePlaylist());
     }
     
     public void removerMusicaAtual() {
