@@ -1,7 +1,11 @@
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Player {
     private Playlist headPlaylist;
     private Playlist playlistAtual;
     private NoMusica musicaAtual;
+    private StringProperty observaMusica = new SimpleStringProperty("Nenhuma");
 
     public Player() {
         this.headPlaylist = null;
@@ -98,5 +102,17 @@ public class Player {
         }
 
         System.out.println("Playlist de " + nomePlaylist + " removida com sucesso!");
+    }
+
+    public NoMusica getMusicaAtual(){
+        return musicaAtual;
+    }
+
+    public Playlist getPlaylistAtual(){
+        return playlistAtual;
+    }
+    
+    public StringProperty musicaAtualProperty() {
+        return observaMusica;
     }
 }

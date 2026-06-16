@@ -1,0 +1,7 @@
+com\musicplayer\Playlist.class
+com\musicplayer\App.class
+module-info.class
+com\musicplayer\SecondaryController.class
+com\musicplayer\NoMusica.class
+com\musicplayer\Player.class
+com\musicplayer\PrimaryController.class

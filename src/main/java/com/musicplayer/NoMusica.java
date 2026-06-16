@@ -1,12 +1,13 @@
 public class NoMusica {
     private String nome;
     private String nomeArtista;
-    private int minutagem;
+    private double minutagem;
     private NoMusica anterior;
     private NoMusica proxima;
 
-    public NoMusica(String nome, int minutagem, NoMusica anterior, NoMusica proxima){
+    public NoMusica(String nome, double minutagem, String nomeArtista, NoMusica anterior, NoMusica proxima){
         this.nome = nome;
+        this.nomeArtista = nomeArtista;
         this.minutagem = minutagem;
         this.anterior = anterior;
         this.proxima = proxima;
@@ -16,11 +17,15 @@ public class NoMusica {
         return nome;
     }
 
+    public String getNomeArtista(){
+        return nomeArtista;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public int getMinutagem() {
+    public double getMinutagem() {
         return minutagem;
     }
 
