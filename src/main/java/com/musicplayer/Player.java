@@ -72,32 +72,32 @@ public class Player {
     }
 
     public void removerPlaylist() {
-        if (ArtistaAtual == null) {
+        if (playlistAtual == null) {
             System.out.println("O player está vazio.");
             return;
         }
 
-        System.out.println("Removendo a playlist: " + ArtistaAtual.getNomeArtista());
+        System.out.println("Removendo a playlist: " + playlistAtual.getNomeArtista());
 
-        if (ArtistaAtual.getProximaPlaylist() == ArtistaAtual) {
-            headArtista = null;
-            ArtistaAtual = null;
+        if (playlistAtual.getProximaPlaylist() == playlistAtual) {
+            headPlaylist = null;
+            playlistAtual = null;
             musicaAtual = null;
         } 
         else {
-            Playlist anterior = ArtistaAtual.getPlaylistAnterior();
-            Playlist proxima = ArtistaAtual.getProximaPlaylist();
+            Playlist anterior = playlistAtual.getPlaylistAnterior();
+            Playlist proxima = playlistAtual.getProximaPlaylist();
 
             anterior.setProximaPlaylist(proxima);
             proxima.setPlaylistAnterior(anterior);
 
-            if (ArtistaAtual == headArtista) {
-                headArtista = proxima;
+            if (playlistAtual == headPlaylist) {
+                headPlaylist = proxima;
             }
-            ArtistaAtual = proxima;
+            playlistAtual = proxima;
             
-            if (!ArtistaAtual.estaVazia()) {
-                musicaAtual = ArtistaAtual.getUltimaMusica().getProxima();
+            if (!playlistAtual.estaVazia()) {
+                musicaAtual = playlistAtual.getUltimaMusica().getProxima();
             } 
             else {
                 musicaAtual = null;
@@ -106,20 +106,20 @@ public class Player {
     }
     
     public void removerMusicaAtual() {
-    if (ArtistaAtual == null || musicaAtual == null) {
-        System.out.println("Nenhuma música tocando no momento.");
-        return;
+        if (playlistAtual == null || musicaAtual == null) {
+            System.out.println("Nenhuma música tocando no momento.");
+            return;
+        }
+    
+        System.out.println("Removendo a música: " + musicaAtual.getNome());
+        NoMusica proximaMusica = musicaAtual.getProxima();
+    
+        if (musicaAtual == proximaMusica) {
+            playlistAtual.removerNoMusica(musicaAtual);
+            musicaAtual = null;
+        } else {
+            playlistAtual.removerNoMusica(musicaAtual);
+            musicaAtual = proximaMusica;
+        }
     }
-
-    System.out.println("Removendo a música: " + musicaAtual.getNome());
-    NoMusica proximaMusica = musicaAtual.getProxima();
-
-    if (musicaAtual == proximaMusica) {
-        ArtistaAtual.removerNoMusica(musicaAtual);
-        musicaAtual = null;
-    } else {
-        ArtistaAtual.removerNoMusica(musicaAtual);
-        musicaAtual = proximaMusica;
-    }
-}
 }
