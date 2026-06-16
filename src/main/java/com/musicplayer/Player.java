@@ -21,7 +21,6 @@ public class Player {
             } else {
                 musicaAtual = null;
             }
-            musicaAtual = playlistAtual.getUltimaMusica().getProxima();
             System.out.println("Playlist atual: " + playlistAtual.getNomeArtista());
         } else {
             System.out.println("O player está vazio.");
