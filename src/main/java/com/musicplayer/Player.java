@@ -14,13 +14,13 @@ public class Player {
         this.musicaAtual.set(null);
     }
 
-    public void proximaPlaylist() {
-        if (playlistAtual != null) {
-            playlistAtual = playlistAtual.getProximaPlaylist();
+    public void proximaPlaylist() { 
+        if (playlistAtual != null) { //O método vê se a playlist atual existe
+            playlistAtual = playlistAtual.getProximaPlaylist(); //Se sim, passa a para a próxima playlist
             if (!playlistAtual.estaVazia()) {
-                musicaAtual.set(playlistAtual.getUltimaMusica().getProxima());
+                musicaAtual.set(playlistAtual.getUltimaMusica().getProxima()); //Caso a proxima playlist não esteja vazia, começa a tocar a primeira música dela
             } else {
-                musicaAtual.set(null);
+                musicaAtual.set(null); //Se estiver, não toca nada
             }
             System.out.println("Playlist atual: " + playlistAtual.getNomePlaylist());
         } else {
@@ -29,7 +29,7 @@ public class Player {
     }
 
     public void playlistAnterior() {
-        if (playlistAtual != null) {
+        if (playlistAtual != null) { //Lógica semelhante à do metodo proximaPlaylist
             playlistAtual = playlistAtual.getPlaylistAnterior();
             if (!playlistAtual.estaVazia()) {
                 musicaAtual.set(playlistAtual.getUltimaMusica().getProxima());
@@ -70,9 +70,9 @@ public class Player {
     }
 
     public void adicionarPlaylist(String nomePlaylist) {
-        Playlist novaPlaylist = new Playlist(nomePlaylist);
+        Playlist novaPlaylist = new Playlist(nomePlaylist); //Cria um novo objeto da classe Playlist
 
-        if (headPlaylist == null) {
+        if (headPlaylist == null) { // Se o player estiver vazio, a nova playlist aponta para si mesma pois é a primeira
             headPlaylist = novaPlaylist;
             novaPlaylist.setProximaPlaylist(novaPlaylist);
             novaPlaylist.setPlaylistAnterior(novaPlaylist); 
@@ -82,7 +82,7 @@ public class Player {
             System.out.println("Playlist de " + nomePlaylist + " criada como a primeira!");
             return;
         }
-        Playlist ultimo = headPlaylist.getPlaylistAnterior();
+        Playlist ultimo = headPlaylist.getPlaylistAnterior(); // Se já existirem outras playlists, a nova vai pro final da lista circular
 
         ultimo.setProximaPlaylist(novaPlaylist);
         novaPlaylist.setPlaylistAnterior(ultimo);
@@ -94,32 +94,33 @@ public class Player {
     }
 
     public void removerPlaylist() {
-        if (playlistAtual == null) {
+        if (playlistAtual == null) { //Olha se há algo para remover
             System.out.println("O player está vazio.");
             return;
         }
 
         System.out.println("Removendo a playlist: " + playlistAtual.getNomePlaylist());
 
-        if (playlistAtual.getProximaPlaylist() == playlistAtual) {
-            headPlaylist = null;
+        if (playlistAtual.getProximaPlaylist() == playlistAtual) { //Se for a única playlist
+            headPlaylist = null; //Deixa o player vazio com os ponteiros em null
             playlistAtual = null;
             musicaAtual.set(null);
             return;
         } 
-        else {
+        else { //Se houver mais playlists
             Playlist anterior = playlistAtual.getPlaylistAnterior();
             Playlist proxima = playlistAtual.getProximaPlaylist();
 
-            anterior.setProximaPlaylist(proxima);
-            proxima.setPlaylistAnterior(anterior);
+            anterior.setProximaPlaylist(proxima); //A próxima da anterior vira a próxima da atual
+            proxima.setPlaylistAnterior(anterior); //A anterior da próxima vira a anterior da atual
+            //Dessa forma, nenhum ponteiro aponta para a atual
 
-            if (playlistAtual == headPlaylist) {
+            if (playlistAtual == headPlaylist) { //Se for o topo, a próxima vira o topo
                 headPlaylist = proxima;
             }
-            playlistAtual = proxima;
+            playlistAtual = proxima; //Avança para a próxima playlist
             
-            if (!playlistAtual.estaVazia()) {
+            if (!playlistAtual.estaVazia()) { //Atualiza a música para a primeira da próxima playlist
                 musicaAtual.set(playlistAtual.getUltimaMusica().getProxima());
             } 
             else {
