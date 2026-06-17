@@ -3,6 +3,13 @@
   "configurations": [
     {
         "type": "java",
+        "name": "Launcher",
+        "request": "launch",
+        "mainClass": "com.musicplayer/com.musicplayer.Launcher",
+        "projectName": "musicplayer"
+    },
+    {
+        "type": "java",
         "name": "Main",
         "request": "launch",
         "mainClass": "com.musicplayer/com.musicplayer.Main",

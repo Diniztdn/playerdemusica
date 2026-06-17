@@ -1,1 +1,7 @@
+com\musicplayer\Launcher.class
+com\musicplayer\Playlist.class
+com\musicplayer\App.class
 module-info.class
+com\musicplayer\Controller.class
+com\musicplayer\NoMusica.class
+com\musicplayer\Player.class
