@@ -129,18 +129,6 @@ public class Player {
         }
     }
 
-    public void adicionarMusica(String nomeMusica, String nomeArtista, double minutagem) {
-        if (playlistAtual == null) {
-            System.out.println("Crie ou selecione uma playlist antes de adicionar músicas.");
-            return; 
-        }
-        playlistAtual.inserirMusica(nomeMusica, nomeArtista, minutagem);
-        if (musicaAtual.get() == null) {
-            musicaAtual.set(playlistAtual.getUltimaMusica().getProxima());
-        }
-        System.out.println("Música '" + nomeMusica + "' adicionada na playlist '" + playlistAtual.getNomePlaylist());
-    }
-    
     public void removerMusicaAtual() {
         if (playlistAtual == null || musicaAtual.get() == null) {
             System.out.println("Nenhuma música tocando no momento.");
