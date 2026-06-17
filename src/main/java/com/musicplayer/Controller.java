@@ -43,10 +43,10 @@ public class Controller{
         if (medidorTempo != null){
             medidorTempo.stop();
         }
-        medidorTempo = new Timeline(new KeyFrame(Duration.seconds(1), event ->{
+        medidorTempo = new Timeline(new KeyFrame(Duration.seconds(0.01), event ->{
             if (!pausado){
                 if (tempoAtual < tempoTotal){
-                    tempoAtual++;
+                    tempoAtual += 0.01;
                     double progresso = tempoAtual / tempoTotal;
                     progressao.setProgress(progresso);
                 } else if(tempoAtual == tempoTotal){
