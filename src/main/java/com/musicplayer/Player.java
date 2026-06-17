@@ -1,23 +1,28 @@
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+package com.musicplayer;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 public class Player {
     private Playlist headPlaylist;
     private Playlist playlistAtual;
-    private NoMusica musicaAtual;
-    private StringProperty observaMusica = new SimpleStringProperty("Nenhuma");
+    private ObjectProperty<NoMusica> musicaAtual = new SimpleObjectProperty<>(null);
 
     public Player() {
         this.headPlaylist = null;
         this.playlistAtual = null;
-        this.musicaAtual = null;
+        this.musicaAtual.set(null);
     }
 
     public void proximaPlaylist() {
         if (playlistAtual != null) {
             playlistAtual = playlistAtual.getProximaPlaylist();
-            musicaAtual = playlistAtual.getUltimaMusica().getProxima();
-            System.out.println("Playlist atual: " + playlistAtual.getNomeArtista());
+            if (!playlistAtual.estaVazia()) {
+                musicaAtual.set(playlistAtual.getUltimaMusica().getProxima());
+            } else {
+                musicaAtual.set(null);
+            }
+            System.out.println("Playlist atual: " + playlistAtual.getNomePlaylist());
         } else {
             System.out.println("O player está vazio.");
         }
@@ -26,26 +31,39 @@ public class Player {
     public void playlistAnterior() {
         if (playlistAtual != null) {
             playlistAtual = playlistAtual.getPlaylistAnterior();
-            musicaAtual = playlistAtual.getUltimaMusica().getProxima();
-            System.out.println("Voltou para a Playlist: " + playlistAtual.getNomeArtista());       
+            if (!playlistAtual.estaVazia()) {
+                musicaAtual.set(playlistAtual.getUltimaMusica().getProxima());
+            } else {
+                musicaAtual.set(null);
+            }
+            System.out.println("Voltou para a Playlist: " + playlistAtual.getNomePlaylist());       
         } else {
             System.out.println("O player está vazio.");
         }
     }
 
     public void proximaMusica() {
-        if (musicaAtual != null) {
-            musicaAtual = musicaAtual.getProxima();
-            System.out.println("Tocando agora: " + musicaAtual.getNome());
+        if (musicaAtual.get() != null) {
+            NoMusica proxima = musicaAtual.get().getProxima();
+            /* Se só existir uma música na playlist, quando ela terminar, ela começa a tocar novamente. */
+            if (proxima == musicaAtual.get()) {
+                musicaAtual.set(null);
+            }
+            musicaAtual.set(proxima);
+            System.out.println("Tocando agora: " + musicaAtual.get().getNome());
         } else {
             System.out.println("Nenhuma música na playlist para avançar.");
         }
     }
 
     public void musicaAnterior() {
-        if (musicaAtual != null) {
-            musicaAtual = musicaAtual.getAnterior();
-            System.out.println("Tocando agora: " + musicaAtual.getNome());
+        if (musicaAtual.get() != null) {
+            NoMusica anterior = musicaAtual.get().getAnterior();
+            if (anterior == musicaAtual.get()) {
+                musicaAtual.set(null);
+            }
+            musicaAtual.set(anterior);
+            System.out.println("Tocando agora: " + musicaAtual.get().getNome());
         } else {
             System.out.println("Nenhuma música na playlist para voltar.");
         }
@@ -60,7 +78,7 @@ public class Player {
             novaPlaylist.setPlaylistAnterior(novaPlaylist); 
             
             playlistAtual = novaPlaylist;
-            musicaAtual = novaPlaylist.getUltimaMusica().getProxima();
+            musicaAtual.set(novaPlaylist.estaVazia() ? null : novaPlaylist.getUltimaMusica().getProxima());
             System.out.println("Playlist de " + nomePlaylist + " criada como a primeira!");
             return;
         }
@@ -81,12 +99,13 @@ public class Player {
             return;
         }
 
-        System.out.println("Removendo a playlist: " + playlistAtual.getNomeArtista());
+        System.out.println("Removendo a playlist: " + playlistAtual.getNomePlaylist());
 
         if (playlistAtual.getProximaPlaylist() == playlistAtual) {
             headPlaylist = null;
             playlistAtual = null;
-            musicaAtual = null;
+            musicaAtual.set(null);
+            return;
         } 
         else {
             Playlist anterior = playlistAtual.getPlaylistAnterior();
@@ -101,41 +120,55 @@ public class Player {
             playlistAtual = proxima;
             
             if (!playlistAtual.estaVazia()) {
-                musicaAtual = playlistAtual.getUltimaMusica().getProxima();
+                musicaAtual.set(playlistAtual.getUltimaMusica().getProxima());
             } 
             else {
-                musicaAtual = null;
+                musicaAtual.set(null);
             }
         }
     }
     
     public void removerMusicaAtual() {
-        if (playlistAtual == null || musicaAtual == null) {
+        if (playlistAtual == null || musicaAtual.get() == null) {
             System.out.println("Nenhuma música tocando no momento.");
             return;
         }
     
-        System.out.println("Removendo a música: " + musicaAtual.getNome());
-        NoMusica proximaMusica = musicaAtual.getProxima();
+        System.out.println("Removendo a música: " + musicaAtual.get().getNome());
+        NoMusica proximaMusica = musicaAtual.get().getProxima();
     
-        if (musicaAtual == proximaMusica) {
-            playlistAtual.removerNoMusica(musicaAtual);
-            musicaAtual = null;
+        if (musicaAtual.get() == proximaMusica) {
+            playlistAtual.removerNoMusica(musicaAtual.get());
+            musicaAtual.set(null);
         } else {
-            playlistAtual.removerNoMusica(musicaAtual);
-            musicaAtual = proximaMusica;
+            playlistAtual.removerNoMusica(musicaAtual.get());
+            musicaAtual.set(proximaMusica);
+        }
+    }
+
+    public void inserirMusicaAtual(String nomeMusica, String nomeArtista, double minutagem) {
+        if (playlistAtual == null) {
+            System.out.println("Não existe playlist ativa para inserir a música.");
+            return;
+        }
+
+        boolean estavaVazia = playlistAtual.estaVazia();
+        playlistAtual.inserirMusica(nomeMusica, nomeArtista, minutagem);
+
+        if (estavaVazia) {
+            musicaAtual.set(playlistAtual.getUltimaMusica().getProxima());
         }
     }
 
     public NoMusica getMusicaAtual(){
-        return musicaAtual;
+        return musicaAtual.get();
     }
 
     public Playlist getPlaylistAtual(){
         return playlistAtual;
     }
     
-    public StringProperty musicaAtualProperty() {
-        return observaMusica;
+    public ObjectProperty<NoMusica> musicaAtualProperty() {
+        return musicaAtual;
     }
 }

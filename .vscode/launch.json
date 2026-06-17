@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+        "type": "java",
+        "name": "Main",
+        "request": "launch",
+        "mainClass": "com.musicplayer/com.musicplayer.Main",
+        "projectName": "musicplayer"
+    },
+    {
+        "type": "java",
+        "name": "Launch MusicPlayer",
+        "request": "launch",
+        "mainClass": "com.musicplayer.Main",
+        "projectName": "musicplayer",
+        "modulePaths": [
+            "${workspaceFolder}/target/classes"
+        ],
+        "vmArgs": "--module-path \"${env:USERPROFILE}\\.m2\\repository\\org\\openjfx\\javafx-controls\\13\\javafx-controls-13-win.jar;${env:USERPROFILE}\\.m2\\repository\\org\\openjfx\\javafx-graphics\\13\\javafx-graphics-13-win.jar;${env:USERPROFILE}\\.m2\\repository\\org\\openjfx\\javafx-base\\13\\javafx-base-13-win.jar;${env:USERPROFILE}\\.m2\\repository\\org\\openjfx\\javafx-fxml\\13\\javafx-fxml-13-win.jar\""
+    }
+]
+}

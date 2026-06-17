@@ -1,3 +1,5 @@
+package com.musicplayer;
+
 public class Playlist {
     private String nomePlaylist;
     private NoMusica ultimaMusica;

@@ -1,3 +1,5 @@
+package com.musicplayer;
+
 public class NoMusica {
     private String nome;
     private String nomeArtista;

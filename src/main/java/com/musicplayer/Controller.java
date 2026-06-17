@@ -1,6 +1,9 @@
 package com.musicplayer;
 
 import java.io.IOException;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -11,30 +14,72 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
+import javafx.util.Duration;
 import java.util.Optional;
 
-public class PrimaryController {
+public class Controller{
     private Player player = new Player();
-    @FXML
-    private Button addplaylist, addmusic, deletemusic, deleteplay, proxplay, antplay, proxmusic, antmusic, nomePlaylist;
+    private Timeline medidorTempo;
+    private double tempoTotal, tempoAtual;
+    private boolean pausado = false;
 
     @FXML
-    private Label nomeMusica, nomeArtista;
+    private Button addplaylist, addmusic, deletemusic, deleteplay, proxplay, antplay, proxmusic, antmusic, parar;
+
+    @FXML
+    private Label nomeMusica, nomeArtista, nomePlaylist;
 
     @FXML
     private ProgressBar progressao;
 
+    public void progressaoMusica(double minutagem){
+        this.pausado = false;
+        if (parar != null){
+            parar.setText("⏸");
+        }
+        this.tempoAtual = 0.0;
+        this.tempoTotal = minutagem * 60;
+        this.progressao.setProgress(0.0);
+        if (medidorTempo != null){
+            medidorTempo.stop();
+        }
+        medidorTempo = new Timeline(new KeyFrame(Duration.seconds(1), event ->{
+            if (!pausado){
+                if (tempoAtual < tempoTotal){
+                    tempoAtual++;
+                    double progresso = tempoAtual / tempoTotal;
+                    progressao.setProgress(progresso);
+                } else if(tempoAtual == tempoTotal){
+                    medidorTempo.stop();
+                    System.out.println("Música encerrada.");
+                    player.proximaMusica();
+                }
+            }
+        }));
+
+        medidorTempo.setCycleCount(Timeline.INDEFINITE);
+        medidorTempo.play();
+    }
+
     @FXML 
     public void initialize(){
-        player.musicaAtualProperty().addListener((observable, valorAntigo, valorNovo) -> {
-            if (player.getMusicaAtual() != null) {
-                nomeMusica.setText(player.getMusicaAtual().getNome());
-                nomeArtista.setText(player.getMusicaAtual().getNomeArtista());
-                nomePlaylist.setText(player.getPlaylistAtual().getNomePlaylist());
+        progressao.setProgress(0.0);
+        player.musicaAtualProperty().addListener((observable, valorAntigo, valorNovo) ->{
+            if (valorNovo != null){
+                nomeMusica.setText(valorNovo.getNome());
+                nomeArtista.setText(valorNovo.getNomeArtista());
+                if (player.getPlaylistAtual() != null){
+                    nomePlaylist.setText(player.getPlaylistAtual().getNomePlaylist());
+                } else {
+                    nomePlaylist.setText("...");
+                }
+                progressao.setProgress(0.0);
+                progressaoMusica(valorNovo.getMinutagem());
             } else {
-                nomeMusica.setText("Nenhuma música está sendo tocada.");
+                nomeMusica.setText("???");
                 nomeArtista.setText("...");
                 nomePlaylist.setText("...");
+                progressaoMusica(0.0);
             }
         });
     }
@@ -45,87 +90,95 @@ public class PrimaryController {
     }
 
     @FXML
+    public void pausarOuRetomar(){
+        if (medidorTempo == null) {
+            return;
+        }
+
+        pausado = !pausado;
+        if (pausado) {
+            medidorTempo.pause();
+            if (parar != null) {
+                parar.setText("▶");
+            }
+        } else {
+            medidorTempo.play();
+            if (parar != null) {
+                parar.setText("⏸");
+            }
+        }
+    }
+
+    @FXML
     public void playlistAnterior(){
         player.playlistAnterior();
     }
 
     @FXML
-    public void abrirPopupAdicionarMusica() {
-        // 1. Cria o Dialog principal
+    public void proximaMusica(){
+        player.proximaMusica();
+    }
+
+    @FXML
+    public void musicaAnterior(){
+        player.musicaAnterior();
+    }
+
+    @FXML
+    public void abrirPopupAdicionarMusica(){
+        if (player.getPlaylistAtual() == null) {
+            System.out.println("Erro: Crie uma playlist antes de adicionar músicas.");
+            return;
+        }
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Nova Música");
         dialog.setHeaderText("Insira os detalhes para adicionar à playlist:");
-
-        // 2. Cria os botões de Confirmar e Cancelar
         ButtonType botaoConfirmarType = new ButtonType("Inserir", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(botaoConfirmarType, ButtonType.CANCEL);
-
-        // 3. Monta o layout de grade (GridPane) para alinhar os campos
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(12);
         grid.setPadding(new Insets(20, 20, 20, 20));
-
-        // 4. Cria os campos de entrada (Fields)
         TextField txtNome = new TextField();
-        txtNome.setPromptText("Ex: Midnight City");
-        
+        txtNome.setPromptText("Ex: White Ferrari");
         TextField txtArtista = new TextField();
-        txtArtista.setPromptText("Ex: M83");
-        
+        txtArtista.setPromptText("Ex: Frank Ocean");
         TextField txtMinutagem = new TextField();
-        txtMinutagem.setPromptText("Ex: 4.03"); // Usar ponto para decimais
-
-        // 5. Organiza as Labels e as Caixas de Texto na grade
+        txtMinutagem.setPromptText("Ex: 4.08");
         grid.add(new Label("Nome da Música:"), 0, 0);
         grid.add(txtNome, 1, 0);
         grid.add(new Label("Artista:"), 0, 1);
         grid.add(txtArtista, 1, 1);
         grid.add(new Label("Duração (minutos):"), 0, 2);
         grid.add(txtMinutagem, 1, 2);
-
-        // 6. Coloca a grade dentro do popup
         dialog.getDialogPane().setContent(grid);
-
-        // Estilização rápida para combinar com o seu tema escuro
         dialog.getDialogPane().setStyle("-fx-background-color: #1E293B;");
-        grid.getChildren().forEach(node -> {
+        grid.getChildren().forEach(node ->{
             if (node instanceof Label) {
                 node.setStyle("-fx-text-fill: #94A3B8; -fx-font-weight: bold;");
             } else if (node instanceof TextField) {
                 node.setStyle("-fx-background-color: #0F172A; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 5;");
             }
         });
-
-        // 7. Abre a janelinha e espera a resposta
         Optional<ButtonType> resultado = dialog.showAndWait();
-
-        // 8. Se clicou em Inserir, processa e envia para a sua lógica
-        if (resultado.isPresent() && resultado.get() == botaoConfirmarType) {
+        if (resultado.isPresent() && resultado.get() == botaoConfirmarType){
             String nome = txtNome.getText().trim();
             String artista = txtArtista.getText().trim();
             String minutagemTexto = txtMinutagem.getText().trim();
-
-            // Validação básica para não enviar campos vazios
-            if (!nome.isEmpty() && !artista.isEmpty() && !minutagemTexto.isEmpty()) {
-                try {
-                    // Converte o texto da minutagem para double
+            if (!nome.isEmpty() && !artista.isEmpty() && !minutagemTexto.isEmpty()){
+                try{
                     double minutagem = Double.parseDouble(minutagemTexto);
-                    
-                    // CHAMA O SEU MÉTODO DE LÓGICA PASSA OS 3 PARAMETROS
-                    player.getPlaylistAtual().inserirMusica(nome, artista, minutagem);
-                    
+                    player.inserirMusicaAtual(nome, artista, minutagem);
                     System.out.println("Música adicionada com sucesso!");
-                    
                 } catch (NumberFormatException e) {
-                    // Entra aqui se o usuário digitar letras no campo de duração
-                    System.out.println("Erro: Digite um número válido para a minutagem (Ex: 4.44).");
+                    System.out.println("Erro: Digite um número válido para a minutagem.");
                 }
             }
         }
     }
 
-    public void abrirPopupAdicionarPlaylist() {
+    @FXML
+    public void abrirPopupAdicionarPlaylist(){
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Nova Música");
         dialog.setHeaderText("Insira os detalhes para adicionar à playlist:");
@@ -147,7 +200,7 @@ public class PrimaryController {
         dialog.getDialogPane().setContent(grid);
 
         dialog.getDialogPane().setStyle("-fx-background-color: #1E293B;");
-        grid.getChildren().forEach(node -> {
+        grid.getChildren().forEach(node ->{
             if (node instanceof Label) {
                 node.setStyle("-fx-text-fill: #94A3B8; -fx-font-weight: bold;");
             } else if (node instanceof TextField) {
@@ -157,7 +210,7 @@ public class PrimaryController {
 
         Optional<ButtonType> resultado = dialog.showAndWait();
 
-        if (resultado.isPresent() && resultado.get() == botaoConfirmarType) {
+        if (resultado.isPresent() && resultado.get() == botaoConfirmarType){
             String nome = txtNome.getText().trim();
             if (!nome.isEmpty()){
                 player.adicionarPlaylist(nome);
@@ -168,11 +221,12 @@ public class PrimaryController {
 
     @FXML
     public void removerPlaylistatual(){
-        player.removerPlaylist(player.getPlaylistAtual().getNomePlaylist());
+        player.removerPlaylist();
     }
 
     @FXML
     public void removerMusicaAtual(){
-        player.getPlaylistAtual().removerMusica(player.getMusicaAtual().getNome());
+        player.removerMusicaAtual();
     }
+
 }
