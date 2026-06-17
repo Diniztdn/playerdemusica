@@ -36,7 +36,7 @@ public class Player {
             } else {
                 musicaAtual.set(null);
             }
-            System.out.println("Voltou para a Playlist: " + playlistAtual.getNomePlaylist());       
+            System.out.println("Voltou para a Playlist: " + playlistAtual.getNomePlaylist());
         } else {
             System.out.println("O player está vazio.");
         }
@@ -126,6 +126,18 @@ public class Player {
                 musicaAtual.set(null);
             }
         }
+    }
+
+    public void adicionarMusica(String nomeMusica, String nomeArtista, double minutagem) {
+        if (playlistAtual == null) {
+            System.out.println("Crie ou selecione uma playlist antes de adicionar músicas.");
+            return; 
+        }
+        playlistAtual.inserirMusica(nomeMusica, nomeArtista, minutagem);
+        if (musicaAtual.get() == null) {
+            musicaAtual.set(playlistAtual.getUltimaMusica().getProxima());
+        }
+        System.out.println("Música '" + nomeMusica + "' adicionada na playlist '" + playlistAtual.getNomePlaylist());
     }
     
     public void removerMusicaAtual() {
