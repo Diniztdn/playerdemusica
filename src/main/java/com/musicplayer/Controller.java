@@ -63,7 +63,7 @@ public class Controller{
                     /* Quando a música chega ao final a contagem para e ocorre a passagem para a 
                     próxima música da playlist (Se for a única música da playlist, a barra apenas
                     reinicia). */
-                } else if(tempoAtual == tempoTotal){
+                } else if(tempoAtual >= tempoTotal){
                     medidorTempo.stop();
                     System.out.println("Música encerrada.");
                     player.proximaMusica();
@@ -169,16 +169,17 @@ public class Controller{
     public void abrirPopupAdicionarMusica(){
         /* Só é possível criar uma música se já houver que possa a receber. */
         if (player.getPlaylistAtual() == null) {
-            System.out.println("Erro: Crie uma playlist antes de adicionar músicas.");
+            System.out.println("Error: Create a playlist before adding songs.");
             return;
         }
         /* Configurando a janela de pop-up que abrirá um diálogo com o usuário para receber
         as informações da música que será adicionada. */
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Nova Música");
-        dialog.setHeaderText("Insira os detalhes para adicionar à playlist:");
-        ButtonType botaoConfirmarType = new ButtonType("Inserir", ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(botaoConfirmarType, ButtonType.CANCEL);
+        dialog.setTitle("New Song");
+        dialog.setHeaderText("Insert the details of the song:");
+        ButtonType botaoConfirmarType = new ButtonType("Insert", ButtonData.OK_DONE);
+        ButtonType botaoCancelarType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().addAll(botaoConfirmarType, botaoCancelarType);
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(12);
@@ -190,11 +191,11 @@ public class Controller{
         txtArtista.setPromptText("Ex: Frank Ocean");
         TextField txtMinutagem = new TextField();
         txtMinutagem.setPromptText("Ex: 4.08");
-        grid.add(new Label("Nome da Música:"), 0, 0);
+        grid.add(new Label("Name:"), 0, 0);
         grid.add(txtNome, 1, 0);
-        grid.add(new Label("Artista:"), 0, 1);
+        grid.add(new Label("Artist:"), 0, 1);
         grid.add(txtArtista, 1, 1);
-        grid.add(new Label("Duração (minutos):"), 0, 2);
+        grid.add(new Label("Duration (minutes):"), 0, 2);
         grid.add(txtMinutagem, 1, 2);
         dialog.getDialogPane().setContent(grid);
         /* Decorando o pop-up de acordo com a paleta de cores do player.*/
@@ -216,9 +217,9 @@ public class Controller{
                 try{
                     double minutagem = Double.parseDouble(minutagemTexto);
                     player.inserirMusicaAtual(nome, artista, minutagem);
-                    System.out.println("Música adicionada com sucesso!");
+                    System.out.println("Song added succesfully!");
                 } catch (NumberFormatException e) {
-                    System.out.println("Erro: Digite um número válido para a minutagem.");
+                    System.out.println("Error: Insert a valid value for the duration.");
                 }
             }
         }
@@ -229,21 +230,20 @@ public class Controller{
     @FXML
     public void abrirPopupAdicionarPlaylist(){
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Nova Música");
-        dialog.setHeaderText("Insira os detalhes para adicionar à playlist:");
-
-        ButtonType botaoConfirmarType = new ButtonType("Inserir", ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(botaoConfirmarType, ButtonType.CANCEL);
-
+        dialog.setTitle("New Playlist");
+        dialog.setHeaderText("Insert the details of the playlist:");
+        ButtonType botaoConfirmarType = new ButtonType("Insert", ButtonData.OK_DONE);
+        ButtonType botaoCancelarType = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().addAll(botaoConfirmarType, botaoCancelarType);
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(12);
         grid.setPadding(new Insets(20, 20, 20, 20));
 
         TextField txtNome = new TextField();
-        txtNome.setPromptText("Ex: Noite de Sábado");
+        txtNome.setPromptText("Ex: Saturday Nights");
 
-        grid.add(new Label("Nome da Playlist:"), 0, 0);
+        grid.add(new Label("Name:"), 0, 0);
         grid.add(txtNome, 1, 0);
 
         dialog.getDialogPane().setContent(grid);

@@ -43,7 +43,7 @@
 
            
 
-            <Button fx:id="addplaylist" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#abrirPopupAdicionarPlaylist" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-text-fill: #1A1A1A; -fx-background-radius: 10;" text="Criar Playlist">
+            <Button fx:id="addplaylist" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#abrirPopupAdicionarPlaylist" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-text-fill: #1A1A1A; -fx-background-radius: 10;" text="Create Playlist">
 
                <font>
 
@@ -55,7 +55,7 @@
                </cursor>
 
             </Button>
-            <Button fx:id="deleteplay" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#removerPlaylistatual" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-text-fill: #1A1A1A; -fx-background-radius: 10;" text="Remover Playlist">
+            <Button fx:id="deleteplay" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#removerPlaylistatual" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-text-fill: #1A1A1A; -fx-background-radius: 10;" text="Remove Playlist">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -63,7 +63,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="addmusic" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#abrirPopupAdicionarMusica" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-text-fill: #1A1A1A; -fx-background-radius: 10;" text="Adicionar Música">
+            <Button fx:id="addmusic" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#abrirPopupAdicionarMusica" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-text-fill: #1A1A1A; -fx-background-radius: 10;" text="Add Song">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -71,7 +71,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="deletemusic" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#removerMusicaAtual" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-text-fill: #1A1A1A; -fx-background-radius: 10;" text="Remover Música">
+            <Button fx:id="deletemusic" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#removerMusicaAtual" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #00d2ff, #92fe9d); -fx-text-fill: #1A1A1A; -fx-background-radius: 10;" text="Remove Song">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -108,7 +108,7 @@
 
                      <children>
 
-                        <Label text="Tocando agora:" textFill="#0F172A">
+                        <Label text="Playing now:" textFill="#0F172A">
 
                            <font>
 

@@ -12,7 +12,7 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scene.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
-        stage.setTitle("Music Player");
+        stage.setTitle("Sona");
         stage.show();
     }
 
